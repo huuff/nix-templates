@@ -12,6 +12,10 @@
         path = ./rust;
         description = "Rust tools and rust analyzer";
       };
+      leptos = {
+        path = ./leptos;
+        description = "Rust tools, rust analyzer, sass, wasm and leptos tooling";
+      };
     };
 
   };
