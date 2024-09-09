@@ -42,6 +42,7 @@
         (rust-bin.stable.latest.default.override {
           targets = [
             "x86_64-unknown-linux-musl"
+            "wasm32-unknown-unknown"
           ];
         })
         rust-analyzer
