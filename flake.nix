@@ -11,34 +11,44 @@
     };
   };
 
-  outputs = { self, nixpkgs, utils, pre-commit-hooks, ... }: {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      utils,
+      pre-commit-hooks,
+      ...
+    }:
+    {
 
-    templates = {
-      rust = {
-        path = ./rust;
-        description = "Rust tools and rust analyzer";
-      };
-      leptos = {
-        path = ./leptos;
-        description = "Rust tools, rust analyzer, sass, wasm and leptos tooling";
-      };
-    };
-  } // utils.lib.eachDefaultSystem (system: {
-    checks = {
-      pre-commit-check = pre-commit-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = {
-          nixpkgs-fmt.enable = true;
+      templates = {
+        rust = {
+          path = ./rust;
+          description = "Rust tools and rust analyzer";
+        };
+        leptos = {
+          path = ./leptos;
+          description = "Rust tools, rust analyzer, sass, wasm and leptos tooling";
         };
       };
-    };
-
-    devShells = {
-      default = nixpkgs.legacyPackages.${system}.mkShell {
-        inherit (self.checks.${system}.pre-commit-check) shellHook;
-        buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+    }
+    // utils.lib.eachDefaultSystem (system: {
+      checks = {
+        pre-commit-check = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          # TODO configure more hooks and actually use treefmt
+          hooks = {
+            nixfmt-rfc-style.enable = true;
+          };
+        };
       };
-    };
-  });
+
+      devShells = {
+        default = nixpkgs.legacyPackages.${system}.mkShell {
+          inherit (self.checks.${system}.pre-commit-check) shellHook;
+          buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+        };
+      };
+    });
 
 }
