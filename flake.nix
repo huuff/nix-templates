@@ -44,9 +44,14 @@
         checks = {
           pre-commit-check = pre-commit.lib.${system}.run {
             src = ./.;
-            # TODO configure more hooks and actually use treefmt
+            # TODO configure more hooks
             hooks = {
-              nixfmt-rfc-style.enable = true;
+              nix-fmt = {
+                name = "Nix fmt";
+                enable = true;
+                entry = "${treefmtEval.config.build.wrapper}/bin/treefmt";
+                pass_filenames = false;
+              };
             };
           };
           formatting = treefmtEval.config.build.check self;
