@@ -19,7 +19,7 @@
     "gitignore": {
       "inputs": {
         "nixpkgs": [
-          "pre-commit-hooks",
+          "pre-commit",
           "nixpkgs"
         ]
       },
@@ -85,7 +85,23 @@
         "type": "github"
       }
     },
-    "pre-commit-hooks": {
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1726481836,
+        "narHash": "sha256-MWTBH4dd5zIz2iatDb8IkqSjIeFum9jAqkFxgHLdzO4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "20f9370d5f588fb8c72e844c54511cab054b5f40",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "pre-commit": {
       "inputs": {
         "flake-compat": "flake-compat",
         "gitignore": "gitignore",
@@ -109,8 +125,9 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "pre-commit-hooks": "pre-commit-hooks",
+        "pre-commit": "pre-commit",
         "systems": "systems",
+        "treefmt": "treefmt",
         "utils": "utils"
       }
     },
@@ -126,6 +143,24 @@
       "original": {
         "owner": "nix-systems",
         "repo": "x86_64-linux",
+        "type": "github"
+      }
+    },
+    "treefmt": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1726560002,
+        "narHash": "sha256-3zr63B6CDZ8FnzrRUvNZlsxLmFjaNyis6R91GjUCIhU=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "77dd46bf0ec7febbc0022bb6e4449cdc49af95d7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
         "type": "github"
       }
     },

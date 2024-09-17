@@ -3,7 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    pre-commit.url = "github:cachix/git-hooks.nix";
+    treefmt.url = "github:numtide/treefmt-nix";
     systems.url = "github:nix-systems/x86_64-linux";
     utils = {
       url = "github:numtide/flake-utils";
@@ -16,7 +17,8 @@
       self,
       nixpkgs,
       utils,
-      pre-commit-hooks,
+      pre-commit,
+      treefmt,
       ...
     }:
     {
@@ -32,23 +34,33 @@
         };
       };
     }
-    // utils.lib.eachDefaultSystem (system: {
-      checks = {
-        pre-commit-check = pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          # TODO configure more hooks and actually use treefmt
-          hooks = {
-            nixfmt-rfc-style.enable = true;
+    // utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+        treefmtEval = treefmt.lib.evalModule pkgs ./treefmt.nix;
+      in
+      {
+        checks = {
+          pre-commit-check = pre-commit.lib.${system}.run {
+            src = ./.;
+            # TODO configure more hooks and actually use treefmt
+            hooks = {
+              nixfmt-rfc-style.enable = true;
+            };
+          };
+          formatting = treefmtEval.config.build.check self;
+        };
+
+        formatter = treefmtEval.config.build.wrapper;
+
+        devShells = {
+          default = nixpkgs.legacyPackages.${system}.mkShell {
+            inherit (self.checks.${system}.pre-commit-check) shellHook;
+            buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
           };
         };
-      };
-
-      devShells = {
-        default = nixpkgs.legacyPackages.${system}.mkShell {
-          inherit (self.checks.${system}.pre-commit-check) shellHook;
-          buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
-        };
-      };
-    });
+      }
+    );
 
 }
