@@ -44,14 +44,18 @@
         checks = {
           pre-commit-check = pre-commit.lib.${system}.run {
             src = ./.;
-            # TODO configure more hooks
+            # TODO add the main hooks like gitleaks and check large files
             hooks = {
-              nix-fmt = {
-                name = "Nix fmt";
+              nix-treefmt = {
+                name = "Nix treefmt";
                 enable = true;
                 entry = "${treefmtEval.config.build.wrapper}/bin/treefmt";
                 pass_filenames = false;
               };
+
+              statix.enable = true;
+              deadnix.enable = true;
+              nil.enable = true;
             };
           };
           formatting = treefmtEval.config.build.check self;
@@ -62,7 +66,13 @@
         devShells = {
           default = pkgs.mkShell {
             inherit (self.checks.${system}.pre-commit-check) shellHook;
-            buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+            buildInputs =
+              with pkgs;
+              self.checks.${system}.pre-commit-check.enabledPackages
+              ++ [
+                nil
+                nixfmt-rfc-style
+              ];
           };
         };
       }
