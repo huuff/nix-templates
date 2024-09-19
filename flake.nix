@@ -45,6 +45,7 @@
           pre-commit-check = pre-commit.lib.${system}.run {
             src = ./.;
             # TODO add the main hooks like gitleaks and check large files
+            # TODO some commit msg linting too
             hooks = {
               treefmt = {
                 enable = true;
@@ -56,9 +57,12 @@
               nil.enable = true;
             };
           };
+
+          # just check formatting is ok without changing anything
           formatting = treefmtEval.config.build.check self;
         };
 
+        # for `nix fmt`
         formatter = treefmtEval.config.build.wrapper;
 
         devShells = {
