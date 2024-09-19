@@ -46,11 +46,9 @@
             src = ./.;
             # TODO add the main hooks like gitleaks and check large files
             hooks = {
-              nix-treefmt = {
-                name = "Nix treefmt";
+              treefmt = {
                 enable = true;
-                entry = "${treefmtEval.config.build.wrapper}/bin/treefmt";
-                pass_filenames = false;
+                packageOverrides.treefmt = treefmtEval.config.build.wrapper;
               };
 
               statix.enable = true;

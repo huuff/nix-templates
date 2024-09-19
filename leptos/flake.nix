@@ -18,7 +18,7 @@
       let
         overlays = [
           (import rust-overlay)
-          (self: super: {
+          (_: _: {
             leptosfmt = self.rustPlatform.buildRustPackage rec {
               pname = "leptosfmt";
               version = "0.1.30";
