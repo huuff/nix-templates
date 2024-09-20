@@ -47,6 +47,13 @@
             # TODO add the main hooks like gitleaks and check large files
             # TODO some commit msg linting too
             hooks = {
+              gitleaks = {
+                name = "gitleaks";
+                enable = true;
+                entry = "${pkgs.gitleaks}/bin/gitleaks detect";
+                stages = [ "pre-commit" ];
+              };
+
               treefmt = {
                 enable = true;
                 packageOverrides.treefmt = treefmtEval.config.build.wrapper;
