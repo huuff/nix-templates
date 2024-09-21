@@ -44,10 +44,10 @@
         checks = {
           pre-commit-check = pre-commit.lib.${system}.run {
             src = ./.;
-            # TODO some commit msg linting too
             hooks = {
               check-merge-conflicts.enable = true;
               check-added-large-files.enable = true;
+              commitizen.enable = true;
 
               gitleaks = {
                 name = "gitleaks";
