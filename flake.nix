@@ -44,9 +44,11 @@
         checks = {
           pre-commit-check = pre-commit.lib.${system}.run {
             src = ./.;
-            # TODO add the main hooks like gitleaks and check large files
             # TODO some commit msg linting too
             hooks = {
+              check-merge-conflicts.enable = true;
+              check-added-large-files.enable = true;
+
               gitleaks = {
                 name = "gitleaks";
                 enable = true;
@@ -62,6 +64,8 @@
               statix.enable = true;
               deadnix.enable = true;
               nil.enable = true;
+
+              actionlint.enable = true;
             };
           };
 
