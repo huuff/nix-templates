@@ -64,6 +64,7 @@
               statix.enable = true;
               deadnix.enable = true;
               nil.enable = true;
+              flake-checker.enable = true;
 
               actionlint.enable = true;
 
