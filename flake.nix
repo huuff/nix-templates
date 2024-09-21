@@ -66,6 +66,8 @@
               nil.enable = true;
 
               actionlint.enable = true;
+
+              markdownlint.enable = true;
             };
           };
 
