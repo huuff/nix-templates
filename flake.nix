@@ -28,9 +28,15 @@
           path = ./rust;
           description = "Rust tools and rust analyzer";
         };
+
         leptos = {
           path = ./leptos;
           description = "Rust tools, rust analyzer, sass, wasm and leptos tooling";
+        };
+
+        nix = {
+          path = ./nix;
+          description = "Nix-only (or mostly) projects with nil, nixfmt and statix";
         };
       };
     }
@@ -69,6 +75,7 @@
               actionlint.enable = true;
 
               markdownlint.enable = true;
+              typos.enable = true;
             };
           };
 
