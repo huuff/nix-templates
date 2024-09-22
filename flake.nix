@@ -86,17 +86,15 @@
         # for `nix fmt`
         formatter = treefmtEval.config.build.wrapper;
 
-        devShells = {
-          default = pkgs.mkShell {
-            inherit (self.checks.${system}.pre-commit-check) shellHook;
-            buildInputs =
-              with pkgs;
-              self.checks.${system}.pre-commit-check.enabledPackages
-              ++ [
-                nil
-                nixfmt-rfc-style
-              ];
-          };
+        devShells.default = pkgs.mkShell {
+          inherit (self.checks.${system}.pre-commit-check) shellHook;
+          buildInputs =
+            with pkgs;
+            self.checks.${system}.pre-commit-check.enabledPackages
+            ++ [
+              nil
+              nixfmt-rfc-style
+            ];
         };
       }
     );
