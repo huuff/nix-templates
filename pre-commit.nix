@@ -26,5 +26,5 @@
 
   markdownlint.enable = true;
   typos.enable = true;
-  
+
 }
