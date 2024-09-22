@@ -44,7 +44,7 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
-        treefmtEval = treefmt.lib.evalModule pkgs ./treefmt.nix;
+        treefmt-build = (treefmt.lib.evalModule pkgs ./treefmt.nix).config.build;
       in
       {
         checks = {
@@ -64,7 +64,7 @@
 
               treefmt = {
                 enable = true;
-                packageOverrides.treefmt = treefmtEval.config.build.wrapper;
+                packageOverrides.treefmt = treefmt-build.wrapper;
               };
 
               statix.enable = true;
@@ -80,11 +80,11 @@
           };
 
           # just check formatting is ok without changing anything
-          formatting = treefmtEval.config.build.check self;
+          formatting = treefmt-build.check self;
         };
 
         # for `nix fmt`
-        formatter = treefmtEval.config.build.wrapper;
+        formatter = treefmt-build.wrapper;
 
         devShells.default = pkgs.mkShell {
           inherit (self.checks.${system}.pre-commit-check) shellHook;
