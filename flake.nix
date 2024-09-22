@@ -47,7 +47,7 @@
         treefmt-build = (treefmt.lib.evalModule pkgs ./treefmt.nix).config.build;
         pre-commit-check = pre-commit.lib.${system}.run {
           src = ./.;
-          hooks = import {
+          hooks = import ./pre-commit.nix {
             inherit pkgs;
             treefmt = treefmt-build.wrapper;
           };
