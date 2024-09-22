@@ -45,39 +45,17 @@
       let
         pkgs = import nixpkgs { inherit system; };
         treefmt-build = (treefmt.lib.evalModule pkgs ./treefmt.nix).config.build;
+        pre-commit-check = pre-commit.lib.${system}.run {
+          src = ./.;
+          hooks = import {
+            inherit pkgs;
+            treefmt = treefmt-build.wrapper;
+          };
+        };
       in
       {
         checks = {
-          pre-commit-check = pre-commit.lib.${system}.run {
-            src = ./.;
-            hooks = {
-              check-merge-conflicts.enable = true;
-              check-added-large-files.enable = true;
-              commitizen.enable = true;
-
-              gitleaks = {
-                name = "gitleaks";
-                enable = true;
-                entry = "${pkgs.gitleaks}/bin/gitleaks detect";
-                stages = [ "pre-commit" ];
-              };
-
-              treefmt = {
-                enable = true;
-                packageOverrides.treefmt = treefmt-build.wrapper;
-              };
-
-              statix.enable = true;
-              deadnix.enable = true;
-              nil.enable = true;
-              flake-checker.enable = true;
-
-              actionlint.enable = true;
-
-              markdownlint.enable = true;
-              typos.enable = true;
-            };
-          };
+          inherit pre-commit-check;
 
           # just check formatting is ok without changing anything
           formatting = treefmt-build.check self;
@@ -87,10 +65,10 @@
         formatter = treefmt-build.wrapper;
 
         devShells.default = pkgs.mkShell {
-          inherit (self.checks.${system}.pre-commit-check) shellHook;
+          inherit (pre-commit-check) shellHook;
           buildInputs =
             with pkgs;
-            self.checks.${system}.pre-commit-check.enabledPackages
+            pre-commit-check.enabledPackages
             ++ [
               nil
               nixfmt-rfc-style
