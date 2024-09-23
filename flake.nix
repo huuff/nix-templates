@@ -55,10 +55,33 @@
       in
       {
         checks = {
-          inherit pre-commit-check;
+          # inherit pre-commit-check;
 
           # just check formatting is ok without changing anything
           formatting = treefmt-build.check self;
+
+          # TODO simplify these: remove the src if unnecessary, wrap the string for the cd and the mkdir
+          statix =
+            pkgs.runCommand "statix"
+              {
+                src = ./.;
+              }
+              ''
+                cd ${./.}
+                ${pkgs.statix}/bin/statix check
+                mkdir "$out"
+              '';
+
+          deadnix =
+            pkgs.runCommand "deadnix"
+              {
+                src = ./.;
+              }
+              ''
+                cd ${./.};
+                ${pkgs.deadnix}/bin/deadnix --fail
+                mkdir "$out"
+              '';
         };
 
         # for `nix fmt`
