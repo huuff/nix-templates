@@ -57,7 +57,7 @@
           pkgs.runCommand name { } ''
             cd ${./.}
             ${code}
-            mkdir "out"
+            mkdir "$out"
           '';
       in
       {
