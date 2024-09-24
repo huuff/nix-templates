@@ -52,36 +52,25 @@
             treefmt = treefmt-build.wrapper;
           };
         };
+        mkCheck =
+          name: code:
+          pkgs.runCommand name { } ''
+            cd ${./.}
+            ${code}
+            mkdir "out"
+          '';
       in
       {
         checks = {
-          # inherit pre-commit-check;
+          inherit pre-commit-check;
 
           # just check formatting is ok without changing anything
           formatting = treefmt-build.check self;
 
-          # TODO simplify these: remove the src if unnecessary, wrap the string for the cd and the mkdir
-          statix =
-            pkgs.runCommand "statix"
-              {
-                src = ./.;
-              }
-              ''
-                cd ${./.}
-                ${pkgs.statix}/bin/statix check
-                mkdir "$out"
-              '';
-
-          deadnix =
-            pkgs.runCommand "deadnix"
-              {
-                src = ./.;
-              }
-              ''
-                cd ${./.};
-                ${pkgs.deadnix}/bin/deadnix --fail
-                mkdir "$out"
-              '';
+          # some of the checks are done in pre-commit hooks, but having them here allows running them
+          # with all files, not just staged changes
+          statix = mkCheck "statix-check" "${pkgs.statix}/bin/statix check";
+          deadnix = mkCheck "deadnix-check" "${pkgs.deadnix}/bin/deadnix --fail";
         };
 
         # for `nix fmt`
