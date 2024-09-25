@@ -1,8 +1,8 @@
 {
-  description = "Template for Nix project";
+  description = "Template for nix projects";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.05";
     pre-commit.url = "github:cachix/git-hooks.nix";
     treefmt.url = "github:numtide/treefmt-nix";
     systems.url = "github:nix-systems/x86_64-linux";
@@ -25,43 +25,43 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
-        treefmtEval = treefmt.lib.evalModule pkgs ./treefmt.nix;
+        treefmt-build = (treefmt.lib.evalModule pkgs ./treefmt.nix).config.build;
+        pre-commit-check = pre-commit.lib.${system}.run {
+          src = ./.;
+          hooks = import ./pre-commit.nix {
+            inherit pkgs;
+            treefmt = treefmt-build.wrapper;
+          };
+        };
+        mkCheck =
+          name: code:
+          pkgs.runCommand name { } ''
+            cd ${./.}
+            ${code}
+            mkdir "$out"
+          '';
       in
       {
         checks = {
-          pre-commit-check = pre-commit.lib.${system}.run {
-            src = ./.;
-            hooks = {
-              gitleaks = {
-                name = "gitleaks";
-                enable = true;
-                entry = "${pkgs.gitleaks}/bin/gitleaks detect";
-                stages = [ "pre-commit" ];
-              };
-
-              treefmt = {
-                enable = true;
-                packageOverrides.treefmt = treefmtEval.config.build.wrapper;
-              };
-
-              statix.enable = true;
-              deadnix.enable = true;
-              nil.enable = true;
-            };
-          };
+          inherit pre-commit-check;
 
           # just check formatting is ok without changing anything
-          formatting = treefmtEval.config.build.check self;
+          formatting = treefmt-build.check self;
+
+          # some of the checks are done in pre-commit hooks, but having them here allows running them
+          # with all files, not just staged changes
+          statix = mkCheck "statix-check" "${pkgs.statix}/bin/statix check";
+          deadnix = mkCheck "deadnix-check" "${pkgs.deadnix}/bin/deadnix --fail";
         };
 
         # for `nix fmt`
-        formatter = treefmtEval.config.build.wrapper;
+        formatter = treefmt-build.wrapper;
 
         devShells.default = pkgs.mkShell {
-          inherit (self.checks.${system}.pre-commit-check) shellHook;
+          inherit (pre-commit-check) shellHook;
           buildInputs =
             with pkgs;
-            self.checks.${system}.pre-commit-check.enabledPackages
+            pre-commit-check.enabledPackages
             ++ [
               nil
               nixfmt-rfc-style
@@ -69,5 +69,4 @@
         };
       }
     );
-
 }

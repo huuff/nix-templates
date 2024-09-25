@@ -2,7 +2,7 @@
   description = "My templates for quickly bootstrapping a working environment";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.05";
     pre-commit.url = "github:cachix/git-hooks.nix";
     treefmt.url = "github:numtide/treefmt-nix";
     systems.url = "github:nix-systems/x86_64-linux";
@@ -22,7 +22,6 @@
       ...
     }:
     {
-
       templates = {
         rust = {
           path = ./rust;
@@ -34,6 +33,7 @@
           description = "Rust tools, rust analyzer, sass, wasm and leptos tooling";
         };
 
+        # pretty much a copy-paste of this
         nix = {
           path = ./nix;
           description = "Nix-only (or mostly) projects with nil, nixfmt and statix";
@@ -69,6 +69,7 @@
 
           # some of the checks are done in pre-commit hooks, but having them here allows running them
           # with all files, not just staged changes
+          # TODO flake-checker too?
           statix = mkCheck "statix-check" "${pkgs.statix}/bin/statix check";
           deadnix = mkCheck "deadnix-check" "${pkgs.deadnix}/bin/deadnix --fail";
         };
