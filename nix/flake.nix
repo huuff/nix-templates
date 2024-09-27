@@ -43,15 +43,12 @@
       in
       {
         checks = {
-          inherit pre-commit-check;
-
           # just check formatting is ok without changing anything
           formatting = treefmt-build.check self;
 
-          # some of the checks are done in pre-commit hooks, but having them here allows running them
-          # with all files, not just staged changes
           statix = mkCheck "statix-check" "${pkgs.statix}/bin/statix check";
           deadnix = mkCheck "deadnix-check" "${pkgs.deadnix}/bin/deadnix --fail";
+          flake-checker = mkCheck "flake-check" "${pkgs.flake-cheker}/bin/flake-checker --fail-mode";
         };
 
         # for `nix fmt`
