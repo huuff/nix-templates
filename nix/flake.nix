@@ -48,7 +48,7 @@
 
           statix = mkCheck "statix-check" "${pkgs.statix}/bin/statix check";
           deadnix = mkCheck "deadnix-check" "${pkgs.deadnix}/bin/deadnix --fail";
-          flake-checker = mkCheck "flake-check" "${pkgs.flake-cheker}/bin/flake-checker --fail-mode";
+          flake-checker = mkCheck "flake-check" "${pkgs.flake-checker}/bin/flake-checker --fail-mode";
         };
 
         # for `nix fmt`

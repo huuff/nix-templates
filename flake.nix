@@ -2,7 +2,7 @@
   description = "My templates for quickly bootstrapping a working environment";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     pre-commit.url = "github:cachix/git-hooks.nix";
     treefmt.url = "github:numtide/treefmt-nix";
     systems.url = "github:nix-systems/x86_64-linux";
@@ -67,7 +67,7 @@
 
           statix = mkCheck "statix-check" "${pkgs.statix}/bin/statix check";
           deadnix = mkCheck "deadnix-check" "${pkgs.deadnix}/bin/deadnix --fail";
-          flake-checker = mkCheck "flake-check" "${pkgs.flake-cheker}/bin/flake-checker --fail-mode";
+          flake-checker = mkCheck "flake-check" "${pkgs.flake-checker}/bin/flake-checker --fail-mode";
         };
 
         # for `nix fmt`
