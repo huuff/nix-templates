@@ -6,6 +6,10 @@
     pre-commit.url = "github:cachix/git-hooks.nix";
     treefmt.url = "github:numtide/treefmt-nix";
     systems.url = "github:nix-systems/x86_64-linux";
+    nix-checks = {
+      url = "github:huuff/nix-checks";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     utils = {
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";
@@ -18,6 +22,7 @@
       nixpkgs,
       utils,
       pre-commit,
+      nix-checks,
       treefmt,
       ...
     }:
@@ -33,22 +38,16 @@
             treefmt = treefmt-build.wrapper;
           };
         };
-        mkCheck =
-          name: code:
-          pkgs.runCommand name { } ''
-            cd ${./.}
-            ${code}
-            mkdir "$out"
-          '';
+        inherit (nix-checks.lib.${system}) checks;
       in
       {
         checks = {
           # just check formatting is ok without changing anything
           formatting = treefmt-build.check self;
 
-          statix = mkCheck "statix-check" "${pkgs.statix}/bin/statix check";
-          deadnix = mkCheck "deadnix-check" "${pkgs.deadnix}/bin/deadnix --fail";
-          flake-checker = mkCheck "flake-check" "${pkgs.flake-checker}/bin/flake-checker --fail-mode";
+          statix = checks.statix ./.;
+          deadnix = checks.deadnix ./.;
+          flake-checker = checks.flake-checker ./.;
         };
 
         # for `nix fmt`
