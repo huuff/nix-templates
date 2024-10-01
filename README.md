@@ -5,6 +5,7 @@ Templates to quickly bootstrap a project with:
 * Appropriate tooling (build system, LSP, formatters, etc.)
 * Sensible pre-commit hooks
 * Basic github actions
+* Flake checks
 
 Just call `nix flake new --template github:huuff/nix-templates#«template»`
 
