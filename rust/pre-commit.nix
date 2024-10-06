@@ -1,7 +1,7 @@
 {
   pkgs,
   treefmt,
-  rustPkgs,
+  rustToolchain,
 }:
 
 {
@@ -35,7 +35,8 @@
     enable = true;
     # override from rust-overlay, which is more up-to-date
     packageOverrides = {
-      inherit (rustPkgs) clippy cargo;
+      clippy = rustToolchain;
+      cargo = rustToolchain;
     };
     settings = {
       allFeatures = true;
