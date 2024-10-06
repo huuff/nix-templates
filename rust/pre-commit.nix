@@ -1,4 +1,8 @@
-{ pkgs, treefmt, rustPkgs }:
+{
+  pkgs,
+  treefmt,
+  rustPkgs,
+}:
 
 {
   check-merge-conflicts.enable = true;
