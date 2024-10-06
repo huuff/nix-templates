@@ -3,9 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.05";
-    pre-commit.url = "github:cachix/git-hooks.nix";
-    treefmt.url = "github:numtide/treefmt-nix";
     systems.url = "github:nix-systems/x86_64-linux";
+    treefmt = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    pre-commit = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-checks = {
       url = "github:huuff/nix-checks";
       inputs.nixpkgs.follows = "nixpkgs";
