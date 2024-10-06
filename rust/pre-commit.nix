@@ -1,4 +1,4 @@
-{ pkgs, treefmt }:
+{ pkgs, treefmt, rustPkgs }:
 
 {
   check-merge-conflicts.enable = true;
@@ -29,6 +29,10 @@
 
   clippy = {
     enable = true;
+    # override from rust-overlay, which is more up-to-date
+    packageOverrides = {
+      inherit (rustPkgs) clippy cargo;
+    };
     settings = {
       allFeatures = true;
     };
