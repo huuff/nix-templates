@@ -18,4 +18,4 @@ jobs:
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: Check
-        run: nix flake check
+        run: nix flake check -L
