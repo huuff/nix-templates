@@ -71,6 +71,7 @@
               # rust
               rustPkgs
               rust-analyzer
+              cargo-expand # see macro expansions
 
               # nix
               nil
