@@ -18,7 +18,8 @@
 
   treefmt = {
     enable = true;
-    packageOverrides.treefmt = treefmt;
+    packagae = treefmt;
+    pass_filenames = false;
   };
 
   statix.enable = true;

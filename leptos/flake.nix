@@ -33,6 +33,7 @@
       treefmt,
       pre-commit,
       nix-checks,
+      ...
     }:
     utils.lib.eachDefaultSystem (
       system:
@@ -68,7 +69,7 @@
           clippy = checks.clippy ./.;
         };
 
-        devShell.default =
+        devShells.default =
           with pkgs;
           mkShell {
             inherit (pre-commit-check) shellHook;
@@ -85,7 +86,7 @@
               cargo-generate # required for cargo-leptos
               dart-sass
               binaryen # required for release compilation
-              my-drvs.leptosfmt
+              myPkgs.leptosfmt
               stylance-cli # bundle sass
             ];
           };
