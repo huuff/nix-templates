@@ -15,3 +15,4 @@ The available ones are:
 * `leptos`: everything in `rust`, plus wasm target, cargo-leptos,
 leptosfmt, stylance, sass and binaryen.
 * `nix`: for nix-only projects, including nil, nixfmt, statix and deadnix.
+* `latex`: quite empty for now

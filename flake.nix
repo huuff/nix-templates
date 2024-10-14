@@ -43,6 +43,11 @@
           path = ./nix;
           description = "Nix-only (or mostly) projects with nil, nixfmt and statix";
         };
+
+        latex = {
+          path = ./latex;
+          description = "For quickly authoring latex docs";
+        };
       };
     }
     // utils.lib.eachDefaultSystem (
