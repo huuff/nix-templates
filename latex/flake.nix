@@ -9,15 +9,20 @@
     };
   };
 
-  outputs = { nixpkgs, utils, ... }:
-  utils.lib.eachDefaultSystem(system:
-  let 
-    pkgs = import nixpkgs { inherit system; };
-  in {
+  outputs =
+    { nixpkgs, utils, ... }:
+    utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
 
-    devShell = with pkgs; mkShell {
-      buildInputs = [texlive.combined.scheme-full];
-    };
-  });
+        devShell =
+          with pkgs;
+          mkShell {
+            buildInputs = [ texlive.combined.scheme-full ];
+          };
+      }
+    );
 }
-
