@@ -9,9 +9,9 @@ _: {
   };
 
   settings.formatter = {
-    leptosfmt =  {
+    leptosfmt = {
       command = "${leptosfmt}/bin/leptosfmt";
-      includes = ["*.rs"];
-   };
+      includes = [ "*.rs" ];
+    };
   };
 }

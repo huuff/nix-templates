@@ -30,9 +30,9 @@
       utils,
       rust-overlay,
       my-drvs,
-    treefmt,
-    pre-commit,
-    nix-checks,
+      treefmt,
+      pre-commit,
+      nix-checks,
     }:
     utils.lib.eachDefaultSystem (
       system:
@@ -48,7 +48,8 @@
           ];
         };
         myPkgs = my-drvs.packages.${system};
-        treefmt-build = (treefmt.lib.evalModule pkgs (import ./treefmt.nix { inherit (myPkgs) leptosfmt; })).config.build;
+        treefmt-build =
+          (treefmt.lib.evalModule pkgs (import ./treefmt.nix { inherit (myPkgs) leptosfmt; })).config.build;
         pre-commit-check = pre-commit.lib.${system}.run {
           src = ./.;
           hooks = import ./pre-commit.nix {
@@ -66,7 +67,7 @@
           flake-checker = checks.flake-checker ./.;
           clippy = checks.clippy ./.;
         };
-        
+
         devShell.default =
           with pkgs;
           mkShell {
@@ -75,7 +76,7 @@
               # nix
               nil
               nixfmt-rfc-style
-              
+
               rustPkgs
               rust-analyzer
 
