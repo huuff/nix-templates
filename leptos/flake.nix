@@ -69,6 +69,8 @@
           clippy = checks.clippy ./.;
         };
 
+        formatter = treefmt-build.wrapper;
+
         devShells.default =
           with pkgs;
           mkShell {
