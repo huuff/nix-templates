@@ -57,7 +57,7 @@
           statix = checks.statix ./.;
           deadnix = checks.deadnix ./.;
           flake-checker = checks.flake-checker ./.;
-          checks = checks.clippy ./.;
+          clippy = checks.clippy ./.;
         };
 
         # for nix fmt
