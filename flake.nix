@@ -31,6 +31,13 @@
         rust = {
           path = ./rust;
           description = "Rust tools and rust analyzer";
+          welcomeText = ''
+            # Rust template
+
+            The template has been installed! You can now run `cargo init .` to create your cargo project. Some alternatives are:
+            * `cargo init . --lib` for a library project.
+            * `cargo init . --bin` for a binary project.
+          '';
         };
 
         leptos = {
