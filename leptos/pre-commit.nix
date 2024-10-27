@@ -19,6 +19,7 @@
   treefmt = {
     enable = true;
     package = treefmt;
+    # only way I got it to run
     pass_filenames = false;
   };
 

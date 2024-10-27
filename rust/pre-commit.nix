@@ -18,7 +18,9 @@
 
   treefmt = {
     enable = true;
-    packageOverrides.treefmt = treefmt;
+    package = treefmt;
+    # only way I found of making it run
+    pass_filenames = false;
   };
 
   statix.enable = true;
