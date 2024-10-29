@@ -38,9 +38,7 @@
     utils.lib.eachDefaultSystem (
       system:
       let
-        overlays = [
-          (import rust-overlay)
-        ];
+        overlays = [ (import rust-overlay) ];
         pkgs = import nixpkgs { inherit system overlays; };
         rustPkgs = pkgs.rust-bin.stable.latest.default.override {
           targets = [

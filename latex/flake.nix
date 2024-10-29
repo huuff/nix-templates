@@ -18,11 +18,7 @@
       in
       {
 
-        devShell =
-          with pkgs;
-          mkShell {
-            buildInputs = [ texlive.combined.scheme-full ];
-          };
+        devShell = with pkgs; mkShell { buildInputs = [ texlive.combined.scheme-full ]; };
       }
     );
 }
