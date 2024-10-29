@@ -3,5 +3,6 @@ _: {
 
   programs = {
     nixfmt.enable = true;
+    yamlfmt.enable = true;
   };
 }
