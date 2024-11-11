@@ -39,6 +39,10 @@
         overlays = [ (import rust-overlay) ];
         pkgs = import nixpkgs { inherit system overlays; };
         rustPkgs = pkgs.rust-bin.stable.latest.default.override {
+          extensions = [
+            "rust-src"
+            "rust-analyzer"
+          ];
           targets = [ "x86_64-unknown-linux-musl" ];
         };
         treefmt-build = (treefmt.lib.evalModule pkgs ./treefmt.nix).config.build;
@@ -70,7 +74,6 @@
             buildInputs = pre-commit-check.enabledPackages ++ [
               # rust
               rustPkgs
-              rust-analyzer
               cargo-expand # see macro expansions
 
               # nix
