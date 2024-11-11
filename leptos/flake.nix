@@ -41,6 +41,10 @@
         overlays = [ (import rust-overlay) ];
         pkgs = import nixpkgs { inherit system overlays; };
         rustPkgs = pkgs.rust-bin.stable.latest.default.override {
+          extensions = [
+            "rust-src"
+            "rust-analyzer"
+          ];
           targets = [
             "x86_64-unknown-linux-musl"
             "wasm32-unknown-unknown"
@@ -79,7 +83,6 @@
               nixfmt-rfc-style
 
               rustPkgs
-              rust-analyzer
 
               cargo-leptos
               cargo-expand # expand macros
