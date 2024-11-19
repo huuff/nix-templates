@@ -44,6 +44,7 @@
           extensions = [
             "rust-src"
             "rust-analyzer"
+            "clippy"
           ];
           targets = [
             "x86_64-unknown-linux-musl"
