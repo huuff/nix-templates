@@ -1,0 +1,8 @@
+# pdflatex junk
+*.log
+*.aux
+*.out
+
+# output
+*.pdf
+
