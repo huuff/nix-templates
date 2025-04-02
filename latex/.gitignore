@@ -6,3 +6,8 @@
 # output
 *.pdf
 
+# direnv junk
+.direnv
+
+# nix junk
+result

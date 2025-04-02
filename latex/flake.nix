@@ -15,6 +15,7 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
+        latex = pkgs.texlive.combined.scheme-full;
       in
       {
 
@@ -22,13 +23,15 @@
           with pkgs;
           mkShell {
             buildInputs = [
-              texlive.combined.scheme-full
+              latex
               (aspellWithDicts (ps: [
                 ps.es
                 ps.en
               ]))
             ];
           };
+
+        packages.default = import ./build.nix { inherit pkgs latex; };
       }
     );
 }
