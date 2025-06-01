@@ -42,7 +42,12 @@
 
         leptos = {
           path = ./leptos;
-          description = "Rust tools, rust analyzer, sass, wasm and leptos tooling";
+          description = "Rust tools, rust-analyzer, sass, wasm and leptos tooling";
+        };
+
+        dioxus = {
+          path = ./dioxus;
+          description = "Rust tools, rust-analyzer and dioxus tooling";
         };
 
         # pretty much a copy-paste of this
