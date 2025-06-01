@@ -72,6 +72,10 @@
           with pkgs;
           mkShell {
             inherit (pre-commit-check) shellHook;
+            nativeBuildInputs = [
+              pkg-config
+            ];
+
             buildInputs = [
               # nix
               nil
@@ -81,6 +85,7 @@
 
               wasm-pack # to test wasm
               dioxus-cli
+              wasm-bindgen-cli_0_2_100
             ];
           };
       }
