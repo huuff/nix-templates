@@ -86,6 +86,22 @@
               wasm-pack # to test wasm
               dioxus-cli
               wasm-bindgen-cli_0_2_100
+
+              # TODO: I copied these off dioxus' official
+              # repository flake, and rust-analyzer seems
+              # to crash without them, but I'm not sure whether
+              # they're all necessary, I should check that
+              #
+              # especially: pkg-config is duplicated, and surely
+              # dioxus doesn't need xdotool?
+              openssl
+              libiconv
+              pkg-config
+              glib
+              gtk3
+              libsoup_3
+              webkitgtk_4_1
+              xdotool
             ];
           };
       }
