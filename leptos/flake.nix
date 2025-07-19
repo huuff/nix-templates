@@ -73,7 +73,14 @@
           with pkgs;
           mkShell {
             inherit (pre-commit-check) shellHook;
+
+            nativeBuildInputs = [
+              pkg-config # stuff breaks without this
+            ];
+
             buildInputs = [
+              openssl # stuff breaks without this
+
               # nix
               nil
               nixfmt-rfc-style
