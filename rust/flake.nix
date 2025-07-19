@@ -72,7 +72,14 @@
           with pkgs;
           mkShell {
             inherit (pre-commit-check) shellHook;
+
+            nativeBuildInputs = [
+              pkg-config # stuff breaks without this
+            ];
+
             buildInputs = pre-commit-check.enabledPackages ++ [
+              openssl # stuff breaks without this
+
               # rust
               rustPkgs
               cargo-expand # see macro expansions
