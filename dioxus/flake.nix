@@ -19,6 +19,10 @@
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";
     };
+    derivations = {
+      url = "github:huuff/nix-derivations?ref=2c63e0bea564a29ce8dcb29ac28f006fb2cd9b0c";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -30,6 +34,7 @@
       treefmt,
       pre-commit,
       nix-checks,
+      derivations,
       ...
     }:
     utils.lib.eachDefaultSystem (
@@ -85,7 +90,7 @@
 
               wasm-pack # to test wasm
               dioxus-cli
-              wasm-bindgen-cli_0_2_100
+              derivations.packages.${system}.wasm-bindgen-cli_0_2_101
 
               # TODO: I copied these off dioxus' official
               # repository flake, and rust-analyzer seems
