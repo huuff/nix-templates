@@ -15,7 +15,7 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
-        latex = pkgs.texlive.combined.scheme-full;
+        latex = pkgs.texlive.combined.scheme-basic;
       in
       {
 
