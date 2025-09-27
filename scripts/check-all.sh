@@ -4,4 +4,7 @@ set -euo pipefail
 # cd to the root dir
 cd "$(git rev-parse --show-toplevel)"
 
-find ./templates -mindepth 1 -maxdepth 1 -type d -exec nix flake check {} \;
+for template in ./templates/*/; do
+    echo "Checking $template..."
+    nix flake check "$template"
+done
