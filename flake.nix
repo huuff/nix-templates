@@ -29,7 +29,7 @@
     {
       templates = {
         rust = {
-          path = ./rust;
+          path = ./templates/rust;
           description = "Rust tools and rust analyzer";
           welcomeText = ''
             # Rust template
@@ -41,23 +41,23 @@
         };
 
         leptos = {
-          path = ./leptos;
+          path = ./templates/leptos;
           description = "Rust tools, rust-analyzer, sass, wasm and leptos tooling";
         };
 
         dioxus = {
-          path = ./dioxus;
+          path = ./templates/dioxus;
           description = "Rust tools, rust-analyzer and dioxus tooling";
         };
 
         # pretty much a copy-paste of this
         nix = {
-          path = ./nix;
+          path = ./templates/nix;
           description = "Nix-only (or mostly) projects with nil, nixfmt and statix";
         };
 
         latex = {
-          path = ./latex;
+          path = ./templates/latex;
           description = "For quickly authoring latex docs";
         };
       };
