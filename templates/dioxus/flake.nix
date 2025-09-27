@@ -65,7 +65,7 @@
       {
         checks = {
           formatting = treefmt-build.check self;
-          statix = checks.statis ./.;
+          statix = checks.statix ./.;
           deadnix = checks.deadnix ./.;
           flake-checker = checks.flake-checker ./.;
           clippy = checks.clippy ./.;
