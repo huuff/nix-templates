@@ -52,7 +52,12 @@
             "wasm32-unknown-unknown"
           ];
         };
-        treefmt-build = (treefmt.lib.evalModule pkgs (import ./treefmt.nix { })).config.build;
+        treefmt-build =
+          (treefmt.lib.evalModule pkgs (
+            import ./treefmt.nix {
+              inherit pkgs rustPkgs;
+            }
+          )).config.build;
         pre-commit-check = pre-commit.lib.${system}.run {
           src = ./.;
           hooks = import ./pre-commit.nix {
